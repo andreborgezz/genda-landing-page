@@ -116,7 +116,7 @@ export function ForWho() {
                   style={{
                     width: '40px',
                     height: '40px',
-                    background: 'rgba(255,255,255,0.08)',
+                    background: 'rgba(29,78,216,0.25)',
                     borderRadius: '10px',
                     display: 'flex',
                     alignItems: 'center',
@@ -125,7 +125,7 @@ export function ForWho() {
                 >
                   <Icon
                     size={24}
-                    color="rgba(255,255,255,0.6)"
+                    color={theme.colors.blueLight}
                     aria-hidden="true"
                   />
                 </div>

@@ -83,27 +83,40 @@ export function HowItWorks() {
                     background: theme.colors.pageBg,
                     border: `1px solid ${theme.colors.bluePastel}`,
                     borderRadius: theme.radii.xl,
-                    padding: '36px 32px',
+                    padding: '32px 28px',
                     position: 'relative',
                     overflow: 'hidden',
                   }}
                 >
-                  <span
-                    aria-hidden="true"
+                  <div
                     style={{
-                      position: 'absolute',
-                      bottom: '-16px',
-                      right: '16px',
-                      fontSize: '100px',
-                      fontWeight: 900,
-                      color: theme.colors.bluePastel,
-                      lineHeight: 1,
-                      pointerEvents: 'none',
-                      userSelect: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      marginBottom: '16px',
                     }}
                   >
-                    {step.number}
-                  </span>
+                    <span
+                      style={{
+                        fontSize: '11px',
+                        fontWeight: 800,
+                        color: theme.colors.blue,
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {step.number}
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        width: '20px',
+                        height: '1px',
+                        background: theme.colors.bluePastel,
+                        display: 'block',
+                      }}
+                    />
+                  </div>
 
                   <div
                     style={{
@@ -115,8 +128,6 @@ export function HowItWorks() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       marginBottom: '20px',
-                      position: 'relative',
-                      zIndex: 1,
                     }}
                   >
                     <Icon size={28} color={theme.colors.blue} aria-hidden="true" />
@@ -128,8 +139,6 @@ export function HowItWorks() {
                       fontWeight: 700,
                       color: theme.colors.blueDark,
                       marginBottom: '10px',
-                      position: 'relative',
-                      zIndex: 1,
                     }}
                   >
                     {step.title}
@@ -140,8 +149,6 @@ export function HowItWorks() {
                       fontSize: '15px',
                       color: theme.colors.textSecondary,
                       lineHeight: 1.65,
-                      position: 'relative',
-                      zIndex: 1,
                     }}
                   >
                     {step.description}

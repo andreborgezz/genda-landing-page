@@ -89,7 +89,7 @@ export function Footer() {
               fontSize: '13px',
             }}
           >
-            © 2025 Genda. Todos os direitos reservados.
+            © {new Date().getFullYear()} Genda. Todos os direitos reservados.
           </span>
           <a
             className="genda-footer-credit-link"

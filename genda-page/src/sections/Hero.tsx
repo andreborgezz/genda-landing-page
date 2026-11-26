@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowDown, ArrowRight, Check } from 'lucide-react'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
@@ -13,17 +13,55 @@ import {
 } from '../lib/motion'
 import { theme } from '../styles/theme'
 
-const TIME_SLOTS = [
-  { time: '09:00', status: 'available' },
-  { time: '10:00', status: 'selected' },
-  { time: '11:00', status: 'unavailable' },
-  { time: '14:00', status: 'available' },
-  { time: '15:00', status: 'available' },
-  { time: '16:00', status: 'available' },
-] as const
+type ServiceId = 'design' | 'limpeza'
+
+const SERVICES: Array<{
+  id: ServiceId
+  name: string
+  duration: string
+  price: string
+  selectedSlot: string
+}> = [
+  {
+    id: 'design',
+    name: 'Design de Sobrancelhas',
+    duration: '60 min',
+    price: 'R$ 160',
+    selectedSlot: '10:00',
+  },
+  {
+    id: 'limpeza',
+    name: 'Limpeza de Pele',
+    duration: '90 min',
+    price: 'R$ 220',
+    selectedSlot: '14:00',
+  },
+]
+
+const TIME_SLOTS = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'] as const
+
+const CHIP_STATES = [
+  {
+    kind: 'pulse' as const,
+    title: 'Novo agendamento!',
+    subtitle: 'Mariana C. · 10:00',
+  },
+  {
+    kind: 'check' as const,
+    title: 'Link copiado',
+    subtitle: 'genda.app/studio-aura',
+  },
+  {
+    kind: 'check' as const,
+    title: 'WhatsApp enviado',
+    subtitle: 'Comprovante enviado',
+  },
+]
 
 export function Hero() {
   const [allowFloat, setAllowFloat] = useState(false)
+  const [activeService, setActiveService] = useState<ServiceId>('design')
+  const [chipIndex, setChipIndex] = useState(0)
   const isSmallMobile = useWindowWidth() < 480
 
   useEffect(() => {
@@ -33,6 +71,30 @@ export function Hero() {
     mq.addEventListener('change', onChange)
     return () => mq.removeEventListener('change', onChange)
   }, [])
+
+  useEffect(() => {
+    if (!allowFloat) {
+      setActiveService('design')
+      setChipIndex(0)
+      return
+    }
+
+    const serviceTimer = window.setInterval(() => {
+      setActiveService((prev) => (prev === 'design' ? 'limpeza' : 'design'))
+    }, 3500)
+
+    const chipTimer = window.setInterval(() => {
+      setChipIndex((prev) => (prev + 1) % CHIP_STATES.length)
+    }, 3000)
+
+    return () => {
+      window.clearInterval(serviceTimer)
+      window.clearInterval(chipTimer)
+    }
+  }, [allowFloat])
+
+  const selectedSlot = activeService === 'design' ? '10:00' : '14:00'
+  const currentChip = CHIP_STATES[chipIndex]
 
   return (
     <section className="genda-hero-section">
@@ -189,7 +251,7 @@ export function Hero() {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            paddingTop: isSmallMobile ? '20px' : '16px',
+            paddingTop: isSmallMobile ? '24px' : '16px',
           }}
         >
           <div
@@ -200,26 +262,6 @@ export function Hero() {
               margin: isSmallMobile ? '0 auto' : undefined,
             }}
           >
-            {!isSmallMobile && (
-              <span
-                style={{
-                  position: 'absolute',
-                  fontSize: '200px',
-                  fontWeight: 900,
-                  color: theme.colors.bluePastel,
-                  opacity: 0.4,
-                  right: '-20px',
-                  top: '-40px',
-                  pointerEvents: 'none',
-                  userSelect: 'none',
-                  zIndex: 0,
-                  lineHeight: 1,
-                }}
-              >
-                01
-              </span>
-            )}
-
             <div
               style={{
                 position: 'absolute',
@@ -325,93 +367,65 @@ export function Hero() {
                 </div>
 
                 <div style={{ display: 'grid', gap: '8px' }}>
-                  <div
-                    style={{
-                      border: `2px solid ${theme.colors.blue}`,
-                      background: theme.colors.surface,
-                      borderRadius: theme.radii.md,
-                      padding: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: '12px',
-                    }}
-                  >
-                    <div>
-                      <div
+                  {SERVICES.map((service) => {
+                    const isSelected = activeService === service.id
+                    return (
+                      <motion.div
+                        key={service.id}
+                        animate={{
+                          opacity: isSelected ? 1 : 0.85,
+                          backgroundColor: isSelected
+                            ? theme.colors.surface
+                            : theme.colors.white,
+                          borderColor: isSelected
+                            ? theme.colors.blue
+                            : theme.colors.bluePastel,
+                        }}
+                        transition={{ duration: 0.3, ease: EASE_OUT }}
                         style={{
-                          fontSize: '14px',
-                          fontWeight: 700,
-                          color: theme.colors.blueDark,
+                          borderStyle: 'solid',
+                          borderWidth: isSelected ? '2px' : '1px',
+                          borderRadius: theme.radii.md,
+                          padding: '12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '12px',
                         }}
                       >
-                        Design de Sobrancelhas
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '12px',
-                          color: theme.colors.textSecondary,
-                        }}
-                      >
-                        60 min
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        color: theme.colors.blueTitle,
-                        fontVariantNumeric: 'tabular-nums',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      R$ 160
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      border: `1px solid ${theme.colors.bluePastel}`,
-                      background: theme.colors.white,
-                      borderRadius: theme.radii.md,
-                      padding: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: '12px',
-                    }}
-                  >
-                    <div>
-                      <div
-                        style={{
-                          fontSize: '14px',
-                          fontWeight: 600,
-                          color: theme.colors.blueDark,
-                        }}
-                      >
-                        Limpeza de Pele
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '12px',
-                          color: theme.colors.textSecondary,
-                        }}
-                      >
-                        90 min
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        color: theme.colors.blueTitle,
-                        fontVariantNumeric: 'tabular-nums',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      R$ 220
-                    </div>
-                  </div>
+                        <div>
+                          <div
+                            style={{
+                              fontSize: '14px',
+                              fontWeight: isSelected ? 700 : 600,
+                              color: theme.colors.blueDark,
+                            }}
+                          >
+                            {service.name}
+                          </div>
+                          <div
+                            style={{
+                              fontSize: '12px',
+                              color: theme.colors.textSecondary,
+                            }}
+                          >
+                            {service.duration}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            fontSize: '14px',
+                            fontWeight: 700,
+                            color: theme.colors.blueTitle,
+                            fontVariantNumeric: 'tabular-nums',
+                            whiteSpace: 'nowrap',
+                          }}
+                        >
+                          {service.price}
+                        </div>
+                      </motion.div>
+                    )
+                  })}
                 </div>
 
                 <div
@@ -435,31 +449,11 @@ export function Hero() {
                     gap: '8px',
                   }}
                 >
-                  {TIME_SLOTS.map((slot) => {
-                    if (slot.status === 'selected') {
+                  {TIME_SLOTS.map((time) => {
+                    if (time === '11:00') {
                       return (
                         <div
-                          key={slot.time}
-                          style={{
-                            background: theme.colors.blue,
-                            color: theme.colors.white,
-                            borderRadius: theme.radii.pill,
-                            padding: '6px 10px',
-                            fontSize: '13px',
-                            fontWeight: 600,
-                            textAlign: 'center',
-                            fontVariantNumeric: 'tabular-nums',
-                          }}
-                        >
-                          {slot.time}
-                        </div>
-                      )
-                    }
-
-                    if (slot.status === 'unavailable') {
-                      return (
-                        <div
-                          key={slot.time}
+                          key={time}
                           style={{
                             color: theme.colors.blueLight,
                             textDecoration: 'line-through',
@@ -472,26 +466,40 @@ export function Hero() {
                             fontVariantNumeric: 'tabular-nums',
                           }}
                         >
-                          {slot.time}
+                          {time}
                         </div>
                       )
                     }
 
+                    const isSelected = time === selectedSlot
                     return (
-                      <div
-                        key={slot.time}
-                        className="genda-slot-available"
+                      <motion.div
+                        key={time}
+                        animate={{
+                          backgroundColor: isSelected
+                            ? theme.colors.blue
+                            : theme.colors.white,
+                          color: isSelected
+                            ? theme.colors.white
+                            : theme.colors.blueDark,
+                          borderColor: isSelected
+                            ? theme.colors.blue
+                            : theme.colors.bluePastel,
+                        }}
+                        transition={{ duration: 0.3, ease: EASE_OUT }}
                         style={{
+                          borderStyle: 'solid',
+                          borderWidth: '1px',
                           borderRadius: theme.radii.pill,
                           padding: '6px 10px',
                           fontSize: '13px',
-                          fontWeight: 500,
+                          fontWeight: isSelected ? 600 : 500,
                           textAlign: 'center',
                           fontVariantNumeric: 'tabular-nums',
                         }}
                       >
-                        {slot.time}
-                      </div>
+                        {time}
+                      </motion.div>
                     )
                   })}
                 </div>
@@ -517,7 +525,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ delay: 1.4, duration: 0.6, ease: EASE_OUT }}
+              transition={{ delay: 1.0, duration: 0.6, ease: EASE_OUT }}
               style={{
                 position: 'absolute',
                 top: isSmallMobile ? '-18px' : '-20px',
@@ -528,120 +536,51 @@ export function Hero() {
                 borderRadius: theme.radii.md,
                 padding: '10px 14px',
                 boxShadow: theme.shadows.card,
-                fontSize: '13px',
-                maxWidth: isSmallMobile ? '250px' : '290px',
+                minWidth: isSmallMobile ? '200px' : '220px',
+                maxWidth: isSmallMobile ? '240px' : '260px',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  fontWeight: 700,
-                  color: theme.colors.blueDark,
-                }}
-              >
-                <span className="genda-pulse-dot" />
-                <span>Novo agendamento!</span>
-              </div>
-              <div
-                style={{
-                  color: theme.colors.textSecondary,
-                  fontSize: '12px',
-                  marginTop: '2px',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                Mariana C. · Design de Sobrancelhas · 10:00
-              </div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={chipIndex}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 6 }}
+                  transition={{ duration: DUR.base, ease: EASE_OUT }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '7px',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      color: theme.colors.blueDark,
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    {currentChip.kind === 'pulse' ? (
+                      <span className="genda-pulse-dot" />
+                    ) : (
+                      <Check size={14} color={theme.colors.green} />
+                    )}
+                    <span>{currentChip.title}</span>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      color: theme.colors.textSecondary,
+                      marginTop: '2px',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
+                    {currentChip.subtitle}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
-
-            <div className="genda-hero-floating-badges">
-              <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={
-                  allowFloat
-                    ? { opacity: 1, x: 0, y: [0, -5, 0] }
-                    : { opacity: 1, x: 0 }
-                }
-                transition={
-                  allowFloat
-                    ? {
-                        opacity: { duration: 0.6, delay: 1.1, ease: EASE_OUT },
-                        x: { duration: 0.6, delay: 1.1, ease: EASE_OUT },
-                        y: {
-                          duration: 3.6,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                          delay: 1.7,
-                        },
-                      }
-                    : { duration: 0.6, delay: 1.1, ease: EASE_OUT }
-                }
-                style={{
-                  position: 'absolute',
-                  bottom: '30%',
-                  left: '-60px',
-                  zIndex: 3,
-                  background: theme.colors.green,
-                  color: theme.colors.white,
-                  borderRadius: theme.radii.pill,
-                  padding: '6px 14px',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  boxShadow: theme.shadows.card,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                Link copiado!
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={
-                  allowFloat
-                    ? { opacity: 1, x: 0, y: [0, -4, 0] }
-                    : { opacity: 1, x: 0 }
-                }
-                transition={
-                  allowFloat
-                    ? {
-                        opacity: { duration: 0.6, delay: 1.3, ease: EASE_OUT },
-                        x: { duration: 0.6, delay: 1.3, ease: EASE_OUT },
-                        y: {
-                          duration: 4.2,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                          delay: 2.0,
-                        },
-                      }
-                    : { duration: 0.6, delay: 1.3, ease: EASE_OUT }
-                }
-                style={{
-                  position: 'absolute',
-                  bottom: '10%',
-                  left: '-40px',
-                  zIndex: 3,
-                  background: theme.colors.white,
-                  color: theme.colors.greenDark,
-                  border: `1px solid ${theme.colors.green}`,
-                  borderRadius: theme.radii.pill,
-                  padding: '6px 14px',
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  boxShadow: theme.shadows.card,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                <span>WhatsApp enviado</span>
-                <Check size={13} color={theme.colors.green} />
-              </motion.div>
-            </div>
           </div>
         </div>
       </div>

@@ -300,12 +300,12 @@ export function Features() {
             className="genda-bento-wide"
             whileHover={{
               y: -4,
-              boxShadow: theme.shadows.cardHover,
+              boxShadow: '0 20px 40px -8px rgba(0,0,0,0.4)',
               transition: { duration: DUR.base, ease: EASE_OUT },
             }}
             style={{
-              background: theme.colors.white,
-              border: `1px solid ${theme.colors.bluePastel}`,
+              background: theme.colors.blueDark,
+              border: '1px solid rgba(255,255,255,0.08)',
               borderRadius: theme.radii.xl,
               padding: '32px',
               cursor: 'default',
@@ -319,7 +319,7 @@ export function Features() {
                 style={{
                   width: '48px',
                   height: '48px',
-                  background: theme.colors.bluePastel,
+                  background: 'rgba(255,255,255,0.1)',
                   borderRadius: theme.radii.md,
                   display: 'flex',
                   alignItems: 'center',
@@ -328,7 +328,7 @@ export function Features() {
               >
                 <ShieldCheck
                   size={22}
-                  color={theme.colors.blue}
+                  color={theme.colors.blueLight}
                   aria-hidden="true"
                 />
               </div>
@@ -337,7 +337,7 @@ export function Features() {
                 style={{
                   fontSize: '18px',
                   fontWeight: 700,
-                  color: theme.colors.blueDark,
+                  color: theme.colors.white,
                   marginTop: '18px',
                   marginBottom: '8px',
                 }}
@@ -348,7 +348,7 @@ export function Features() {
               <p
                 style={{
                   fontSize: '14px',
-                  color: theme.colors.textSecondary,
+                  color: 'rgba(255,255,255,0.6)',
                   lineHeight: 1.65,
                   maxWidth: '520px',
                 }}
@@ -370,8 +370,8 @@ export function Features() {
             >
               <div
                 style={{
-                  background: theme.colors.surface,
-                  border: `1px solid ${theme.colors.bluePastel}`,
+                  background: 'rgba(16,185,129,0.15)',
+                  border: '1px solid rgba(16,185,129,0.3)',
                   borderRadius: '10px',
                   padding: '10px 12px',
                   display: 'flex',
@@ -385,7 +385,7 @@ export function Features() {
                     style={{
                       fontSize: '13px',
                       fontWeight: 700,
-                      color: theme.colors.blueDark,
+                      color: theme.colors.white,
                       fontVariantNumeric: 'tabular-nums',
                     }}
                   >
@@ -394,7 +394,7 @@ export function Features() {
                   <div
                     style={{
                       fontSize: '12px',
-                      color: theme.colors.greenDark,
+                      color: '#6EE7B7', // contrast token specified in task 009
                       fontWeight: 600,
                     }}
                   >
@@ -419,15 +419,14 @@ export function Features() {
 
               <div
                 style={{
-                  background: theme.colors.pageBg,
-                  border: `1px dashed ${theme.colors.blueLight}`,
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px dashed rgba(255,255,255,0.15)',
                   borderRadius: '10px',
                   padding: '10px 12px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   gap: '8px',
-                  opacity: 0.85,
                 }}
               >
                 <div>
@@ -435,17 +434,17 @@ export function Features() {
                     style={{
                       fontSize: '13px',
                       fontWeight: 600,
-                      color: theme.colors.textSecondary,
+                      color: 'rgba(255,255,255,0.4)',
                       textDecoration: 'line-through',
                       fontVariantNumeric: 'tabular-nums',
                     }}
                   >
-                    10:00 · 2º pedido
+                    10:00 · tentativa
                   </div>
                   <div
                     style={{
                       fontSize: '12px',
-                      color: theme.colors.blueTitle,
+                      color: 'rgba(255,255,255,0.4)',
                       fontWeight: 600,
                     }}
                   >
@@ -457,8 +456,8 @@ export function Features() {
                     width: '24px',
                     height: '24px',
                     borderRadius: '50%',
-                    background: theme.colors.bluePastel,
-                    color: theme.colors.blueTitle,
+                    background: 'rgba(255,255,255,0.08)',
+                    color: 'rgba(255,255,255,0.4)',
                     display: 'grid',
                     placeItems: 'center',
                     flexShrink: 0,

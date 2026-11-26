@@ -172,15 +172,6 @@ input:focus-visible {
   }
 }
 
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
 @keyframes gendaRingPulse {
   0% {
     box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.3);
@@ -213,11 +204,29 @@ input:focus-visible {
   animation: growWidth 1s ease forwards 0.8s;
 }
 
-.genda-cursor-blink {
-  display: inline-block;
-  margin-left: 2px;
+.genda-slug-input {
+  font-family: inherit;
+  font-size: clamp(18px, 2.5vw, 28px);
+  font-weight: 700;
   color: #1D4ED8;
-  animation: blink 1s step-end infinite;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #DBEAFE;
+  outline: none;
+  min-width: 80px;
+  width: auto;
+  max-width: 220px;
+  letter-spacing: -0.02em;
+  transition: border-color 150ms ease;
+  padding: 0 2px;
+}
+
+.genda-slug-input::placeholder {
+  color: #DBEAFE;
+}
+
+.genda-slug-input:focus {
+  border-bottom-color: #1D4ED8;
 }
 
 .genda-ring-pulse {
@@ -292,10 +301,6 @@ input:focus-visible {
   border-color: #93C5FD;
 }
 
-.genda-hero-floating-badges {
-  display: block;
-}
-
 .genda-steps-wrap {
   position: relative;
   margin-top: 56px;
@@ -350,12 +355,12 @@ input:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 28px;
-  transition: background-color 200ms ease, border-color 200ms ease;
+  transition: background 200ms ease, transform 200ms ease;
 }
 
 .genda-forwho-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
 }
 
 .genda-pricing-layout {
@@ -511,10 +516,6 @@ input:focus-visible {
   .genda-header-cta {
     padding: 8px 16px;
     font-size: 13px;
-  }
-
-  .genda-hero-floating-badges {
-    display: none;
   }
 
   .genda-steps-connector {

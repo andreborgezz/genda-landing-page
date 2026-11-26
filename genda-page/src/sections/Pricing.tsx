@@ -1,6 +1,6 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, Copy, Globe } from 'lucide-react'
 import { SectionBadge } from '../components/SectionBadge'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { DUR, EASE_OUT, pressable } from '../lib/motion'
@@ -11,8 +11,36 @@ const PROMISES = ['Sem cartão', 'Setup em 5 min', 'Gratuito no beta'] as const
 export function Pricing() {
   const { ref: headerRef, inView: headerInView } = useScrollReveal()
   const { ref: cardRef, inView: cardInView } = useScrollReveal()
+  const [studioName, setStudioName] = useState('studio-aura')
+  const [copied, setCopied] = useState(false)
+  const copyTimerRef = useRef<number | null>(null)
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+
+  const slug =
+    studioName
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'seu-studio'
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current !== null) {
+        window.clearTimeout(copyTimerRef.current)
+      }
+    }
+  }, [])
+
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(`https://genda.app/${slug}`)
+    setCopied(true)
+    if (copyTimerRef.current !== null) {
+      window.clearTimeout(copyTimerRef.current)
+    }
+    copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000)
+  }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -98,40 +126,107 @@ export function Pricing() {
                   color: theme.colors.textSecondary,
                   textTransform: 'uppercase',
                   letterSpacing: '0.08em',
-                  marginBottom: '12px',
                 }}
               >
                 Seu endereço no Genda
               </div>
+
               <div
                 style={{
-                  fontSize: 'clamp(20px, 3vw, 32px)',
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.2,
-                  wordBreak: 'break-word',
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  gap: '4px',
+                  marginTop: '12px',
+                  flexWrap: 'wrap',
                 }}
               >
-                <span style={{ color: theme.colors.textSecondary }}>
+                <span
+                  style={{
+                    fontSize: 'clamp(18px, 2.5vw, 28px)',
+                    fontWeight: 700,
+                    color: theme.colors.textSecondary,
+                  }}
+                >
                   genda.app/
                 </span>
-                <span style={{ color: theme.colors.blue }}>studio-aura</span>
-                <span className="genda-cursor-blink" aria-hidden="true">
-                  |
-                </span>
+                <input
+                  type="text"
+                  value={studioName}
+                  onChange={(e) => setStudioName(e.target.value)}
+                  placeholder="seu-studio"
+                  maxLength={40}
+                  className="genda-slug-input"
+                  aria-label="Nome do seu estúdio"
+                />
               </div>
-              <p
+
+              <div
                 style={{
-                  fontSize: '15px',
-                  color: theme.colors.textSecondary,
-                  marginTop: '14px',
-                  maxWidth: '380px',
-                  lineHeight: 1.6,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '12px',
+                  borderRadius: '10px',
+                  background: theme.colors.pageBg,
+                  border: `1px solid ${theme.colors.bluePastel}`,
+                  padding: '10px 14px',
+                  marginTop: '20px',
+                  flexWrap: 'wrap',
                 }}
               >
-                Um link curto com a identidade do seu estúdio para o cliente
-                escolher serviço, dia e horário sem sair do navegador.
-              </p>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontFamily: 'monospace',
+                    fontSize: '13px',
+                    color: theme.colors.blue,
+                    fontWeight: 600,
+                    minWidth: 0,
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  <Globe
+                    size={15}
+                    color={theme.colors.blue}
+                    style={{ flexShrink: 0 }}
+                    aria-hidden="true"
+                  />
+                  <span>genda.app/{slug}</span>
+                </div>
+                <motion.button
+                  type="button"
+                  onClick={handleCopy}
+                  whileTap={{
+                    scale: 0.96,
+                    transition: { duration: DUR.press, ease: EASE_OUT },
+                  }}
+                  style={{
+                    background: copied ? theme.colors.green : theme.colors.blue,
+                    color: theme.colors.white,
+                    border: 'none',
+                    borderRadius: theme.radii.pill,
+                    padding: '4px 14px',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    transition: 'background 200ms ease',
+                    flexShrink: 0,
+                  }}
+                  aria-label={copied ? 'Link copiado' : 'Copiar link'}
+                >
+                  {copied ? (
+                    <Check size={12} aria-hidden="true" />
+                  ) : (
+                    <Copy size={12} aria-hidden="true" />
+                  )}
+                  <span>{copied ? 'Copiado!' : 'Copiar'}</span>
+                </motion.button>
+              </div>
             </div>
           </div>
 
