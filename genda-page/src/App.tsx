@@ -1,17 +1,27 @@
+import { MotionConfig } from 'framer-motion'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
-import './App.css'
+import { Hero } from './sections/Hero'
+import { HowItWorks } from './sections/HowItWorks'
+import { Features } from './sections/Features'
+import { Testimonials } from './sections/Testimonials'
+import { Pricing } from './sections/Pricing'
+import { CTA } from './sections/CTA'
 
-function App() {
+export function App() {
   return (
-    <div style={{ fontFamily: 'sans-serif', margin: '0 auto', maxWidth: '800px' }}>
+    <MotionConfig reducedMotion="user">
       <Header />
-      <main style={{ padding: '2rem' }}>
-        <h1>Hello React + TypeScript!</h1>
-        <p>This is a complete template with components.</p>
+      <main>
+        <Hero />
+        <HowItWorks />
+        <Features />
+        <Testimonials />
+        <Pricing />
+        <CTA />
       </main>
       <Footer />
-    </div>
+    </MotionConfig>
   )
 }
 
