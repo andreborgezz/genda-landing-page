@@ -22,7 +22,7 @@ html {
 }
 
 section[id] {
-  scroll-margin-top: 92px;
+  scroll-margin-top: 88px;
 }
 
 body {
@@ -73,6 +73,34 @@ input:focus-visible {
   z-index: 0;
 }
 
+.genda-header-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 16px 24px 0;
+}
+
+.genda-header-bar {
+  max-width: 1100px;
+  margin: 0 auto;
+  border: 1px solid #DBEAFE;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30, 58, 138, 0.08);
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: background-color 200ms ease;
+}
+
+.genda-header-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
 .genda-nav-links {
   display: flex;
   align-items: center;
@@ -93,6 +121,7 @@ input:focus-visible {
 .genda-header-cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: #1D4ED8;
   color: #FFFFFF;
@@ -106,6 +135,11 @@ input:focus-visible {
 
 .genda-header-cta:hover {
   background: #1E40AF;
+}
+
+.genda-footer {
+  background: #0A1C30;
+  padding: 64px 24px 40px;
 }
 
 .genda-footer-top {
@@ -126,6 +160,8 @@ input:focus-visible {
   color: #5A6B82;
   font-size: 14px;
   transition: color 150ms ease;
+  display: inline-flex;
+  align-items: center;
 }
 
 .genda-footer-link:hover {
@@ -214,8 +250,9 @@ input:focus-visible {
   border-bottom: 2px solid #DBEAFE;
   outline: none;
   min-width: 80px;
-  width: auto;
-  max-width: 220px;
+  flex: 1;
+  width: 100%;
+  max-width: 240px;
   letter-spacing: -0.02em;
   transition: border-color 150ms ease;
   padding: 0 2px;
@@ -249,6 +286,13 @@ input:focus-visible {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 64px;
+}
+
+.genda-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
 }
 
 .genda-hero-primary {
@@ -289,16 +333,9 @@ input:focus-visible {
   border-color: #93C5FD;
 }
 
-.genda-slot-available {
-  border: 1px solid #DBEAFE;
-  background: #FFFFFF;
-  color: #0A1C30;
-  transition: background-color 150ms ease, border-color 150ms ease;
-}
-
-.genda-slot-available:hover {
-  background: #F4F8FF;
-  border-color: #93C5FD;
+.genda-section-how {
+  background: linear-gradient(180deg, #F8F9FF 0%, #FFFFFF 30%);
+  padding: 88px 24px;
 }
 
 .genda-steps-wrap {
@@ -324,6 +361,22 @@ input:focus-visible {
   gap: 24px;
 }
 
+.genda-step-card {
+  background: #F8F9FF;
+  border: 1px solid #DBEAFE;
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.genda-section-features {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #F8F9FF 0%, #FFFFFF 100%);
+  padding: 88px 24px 64px;
+}
+
 .genda-features-bento {
   margin-top: 56px;
   display: grid;
@@ -341,6 +394,17 @@ input:focus-visible {
 
 .genda-bento-half {
   grid-column: span 3;
+}
+
+.genda-feature-card {
+  border-radius: 20px;
+  padding: 32px;
+  cursor: default;
+}
+
+.genda-section-forwho {
+  background: #0A1C30;
+  padding: 96px 24px;
 }
 
 .genda-forwho-grid {
@@ -363,6 +427,13 @@ input:focus-visible {
   transform: translateY(-2px);
 }
 
+.genda-section-pricing {
+  position: relative;
+  overflow: hidden;
+  background: #F8F9FF;
+  padding: 96px 24px;
+}
+
 .genda-pricing-layout {
   margin-top: 56px;
   display: grid;
@@ -376,6 +447,15 @@ input:focus-visible {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+}
+
+.genda-pricing-url-card {
+  background: #FFFFFF;
+  border: 1px solid #DBEAFE;
+  border-radius: 20px;
+  padding: 28px 32px;
+  box-shadow: 0px 10px 25px -5px rgba(30, 58, 138, 0.14), 0px 4px 10px -2px rgba(30, 58, 138, 0.05);
+  width: 100%;
 }
 
 .genda-pricing-card {
@@ -444,6 +524,14 @@ input:focus-visible {
   gap: 16px 32px;
 }
 
+.genda-section-cta {
+  background: linear-gradient(135deg, #1D4ED8 0%, #0A1C30 100%);
+  padding: 96px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
 .genda-cta-final-btn {
   background: #FFFFFF;
   color: #1D4ED8;
@@ -454,6 +542,7 @@ input:focus-visible {
   margin-top: 36px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   transition: background-color 200ms ease, box-shadow 200ms ease;
 }
@@ -474,12 +563,12 @@ input:focus-visible {
 
 @media (max-width: 899px) {
   .genda-hero-section {
-    padding: 24px 24px 64px;
+    padding: 20px 24px 64px;
   }
 
   .genda-hero-inner {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 44px;
   }
 
   .genda-features-bento {
@@ -497,14 +586,23 @@ input:focus-visible {
 
   .genda-forwho-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .genda-pricing-layout {
     grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .genda-pricing-card {
+    order: 1;
   }
 
   .genda-pricing-url-col {
-    display: none;
+    order: 2;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
@@ -516,6 +614,7 @@ input:focus-visible {
   .genda-header-cta {
     padding: 8px 16px;
     font-size: 13px;
+    min-height: 40px;
   }
 
   .genda-steps-connector {
@@ -524,7 +623,29 @@ input:focus-visible {
 
   .genda-steps-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
+  }
+
+  .genda-section-how,
+  .genda-section-forwho,
+  .genda-section-pricing,
+  .genda-section-cta {
+    padding: 64px 20px;
+  }
+
+  .genda-section-features {
+    padding: 64px 20px 56px;
+  }
+
+  .genda-steps-wrap,
+  .genda-features-bento,
+  .genda-forwho-grid,
+  .genda-pricing-layout {
+    margin-top: 40px;
+  }
+
+  .genda-footer {
+    padding: 48px 20px 32px;
   }
 
   .genda-footer-top {
@@ -533,12 +654,18 @@ input:focus-visible {
   }
 
   .genda-footer-links {
+    margin-top: 36px;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 24px;
+    gap: 14px 24px;
+  }
+
+  .genda-footer-link {
+    min-height: 36px;
   }
 
   .genda-footer-bottom {
+    margin-top: 36px;
     flex-direction: column;
     align-items: flex-start;
   }
@@ -548,6 +675,7 @@ input:focus-visible {
   .genda-features-bento,
   .genda-forwho-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .genda-bento-wide,
@@ -555,11 +683,57 @@ input:focus-visible {
   .genda-bento-half {
     grid-column: span 1;
   }
+
+  .genda-feature-card,
+  .genda-step-card,
+  .genda-forwho-card {
+    padding: 24px 20px;
+  }
 }
 
 @media (max-width: 539px) {
-  .genda-pricing-card {
-    padding: 28px 20px;
+  .genda-header-wrap {
+    padding: 12px 16px 0;
+  }
+
+  .genda-header-bar {
+    padding: 0 14px;
+    height: 54px;
+  }
+
+  .genda-header-logo {
+    height: 28px;
+  }
+
+  .genda-hero-section {
+    padding: 20px 16px 56px;
+  }
+
+  .genda-hero-ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .genda-hero-primary,
+  .genda-hero-secondary {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .genda-section-how,
+  .genda-section-forwho,
+  .genda-section-pricing,
+  .genda-section-cta {
+    padding: 56px 16px;
+  }
+
+  .genda-section-features {
+    padding: 56px 16px 48px;
+  }
+
+  .genda-pricing-card,
+  .genda-pricing-url-card {
+    padding: 24px 18px;
   }
 
   .genda-waitlist-form {
@@ -576,7 +750,18 @@ input:focus-visible {
 
   .genda-waitlist-btn {
     width: 100%;
+    min-height: 44px;
     border-radius: 10px;
+  }
+
+  .genda-cta-final-btn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+
+  .genda-footer {
+    padding: 48px 16px 32px;
   }
 }
 

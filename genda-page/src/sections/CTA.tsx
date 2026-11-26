@@ -15,15 +15,7 @@ export function CTA() {
   const { ref, inView } = useScrollReveal()
 
   return (
-    <section
-      style={{
-        background: `linear-gradient(135deg, ${theme.colors.blue} 0%, ${theme.colors.blueDark} 100%)`,
-        padding: '96px 24px',
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <section className="genda-section-cta">
       <div
         aria-hidden="true"
         style={{
@@ -126,7 +118,7 @@ export function CTA() {
         <motion.p
           variants={fadeIn}
           style={{
-            fontSize: '18px',
+            fontSize: 'clamp(16px, 2.5vw, 18px)',
             color: 'rgba(255,255,255,0.7)',
             marginTop: '16px',
           }}

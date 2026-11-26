@@ -144,7 +144,7 @@ export function Hero() {
             variants={heroBlurInUp}
             style={{
               marginTop: '20px',
-              fontSize: 'clamp(40px, 5vw, 64px)',
+              fontSize: 'clamp(34px, 5vw, 64px)',
               fontWeight: 800,
               lineHeight: 1.05,
               letterSpacing: '-0.03em',
@@ -193,12 +193,7 @@ export function Hero() {
 
           <motion.div
             variants={fadeIn}
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '12px',
-              marginTop: '32px',
-            }}
+            className="genda-hero-ctas"
           >
             <motion.a
               href="#precos"
@@ -251,7 +246,7 @@ export function Hero() {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            paddingTop: isSmallMobile ? '24px' : '16px',
+            paddingTop: isSmallMobile ? '28px' : '16px',
           }}
         >
           <div

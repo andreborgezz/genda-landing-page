@@ -24,12 +24,7 @@ export function Features() {
   return (
     <section
       id="funcionalidades"
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        background: `linear-gradient(180deg, ${theme.colors.pageBg} 0%, ${theme.colors.white} 100%)`,
-        padding: '88px 24px 64px',
-      }}
+      className="genda-section-features"
     >
       <div
         aria-hidden="true"
@@ -83,7 +78,7 @@ export function Features() {
         >
           <motion.article
             variants={fadeIn}
-            className="genda-bento-wide"
+            className="genda-bento-wide genda-feature-card"
             whileHover={{
               y: -4,
               boxShadow: theme.shadows.cardHover,
@@ -92,9 +87,6 @@ export function Features() {
             style={{
               background: theme.colors.white,
               border: `1px solid ${theme.colors.bluePastel}`,
-              borderRadius: theme.radii.xl,
-              padding: '32px',
-              cursor: 'default',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -187,7 +179,7 @@ export function Features() {
 
           <motion.article
             variants={fadeIn}
-            className="genda-bento-narrow"
+            className="genda-bento-narrow genda-feature-card"
             whileHover={{
               y: -4,
               boxShadow: theme.shadows.cardHover,
@@ -196,9 +188,6 @@ export function Features() {
             style={{
               background: theme.colors.white,
               border: `1px solid ${theme.colors.bluePastel}`,
-              borderRadius: theme.radii.xl,
-              padding: '32px',
-              cursor: 'default',
             }}
           >
             <div
@@ -242,7 +231,7 @@ export function Features() {
 
           <motion.article
             variants={fadeIn}
-            className="genda-bento-narrow"
+            className="genda-bento-narrow genda-feature-card"
             whileHover={{
               y: -4,
               boxShadow: theme.shadows.cardHover,
@@ -251,9 +240,6 @@ export function Features() {
             style={{
               background: theme.colors.white,
               border: `1px solid ${theme.colors.bluePastel}`,
-              borderRadius: theme.radii.xl,
-              padding: '32px',
-              cursor: 'default',
             }}
           >
             <div
@@ -297,7 +283,7 @@ export function Features() {
 
           <motion.article
             variants={fadeIn}
-            className="genda-bento-wide"
+            className="genda-bento-wide genda-feature-card"
             whileHover={{
               y: -4,
               boxShadow: '0 20px 40px -8px rgba(0,0,0,0.4)',
@@ -306,9 +292,6 @@ export function Features() {
             style={{
               background: theme.colors.blueDark,
               border: '1px solid rgba(255,255,255,0.08)',
-              borderRadius: theme.radii.xl,
-              padding: '32px',
-              cursor: 'default',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -471,7 +454,7 @@ export function Features() {
 
           <motion.article
             variants={fadeIn}
-            className="genda-bento-half"
+            className="genda-bento-half genda-feature-card"
             whileHover={{
               y: -4,
               boxShadow: theme.shadows.cardHover,
@@ -480,9 +463,6 @@ export function Features() {
             style={{
               background: theme.colors.white,
               border: `1px solid ${theme.colors.bluePastel}`,
-              borderRadius: theme.radii.xl,
-              padding: '32px',
-              cursor: 'default',
             }}
           >
             <div
@@ -530,7 +510,7 @@ export function Features() {
 
           <motion.article
             variants={fadeIn}
-            className="genda-bento-half"
+            className="genda-bento-half genda-feature-card"
             whileHover={{
               y: -4,
               boxShadow: theme.shadows.cardHover,
@@ -539,9 +519,6 @@ export function Features() {
             style={{
               background: theme.colors.white,
               border: `1px solid ${theme.colors.bluePastel}`,
-              borderRadius: theme.radii.xl,
-              padding: '32px',
-              cursor: 'default',
             }}
           >
             <div

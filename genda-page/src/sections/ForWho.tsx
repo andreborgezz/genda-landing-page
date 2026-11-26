@@ -44,10 +44,7 @@ export function ForWho() {
   return (
     <section
       id="para-quem"
-      style={{
-        background: theme.colors.blueDark,
-        padding: '96px 24px',
-      }}
+      className="genda-section-forwho"
     >
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div
@@ -74,7 +71,7 @@ export function ForWho() {
 
           <h2
             style={{
-              fontSize: 'clamp(36px, 5vw, 60px)',
+              fontSize: 'clamp(30px, 5vw, 60px)',
               fontWeight: 800,
               color: theme.colors.white,
               letterSpacing: '-0.03em',
@@ -86,10 +83,11 @@ export function ForWho() {
 
           <p
             style={{
-              fontSize: '16px',
+              fontSize: 'clamp(13px, 3vw, 16px)',
               color: 'rgba(255,255,255,0.4)',
-              letterSpacing: '0.08em',
+              letterSpacing: '0.04em',
               marginTop: '12px',
+              lineHeight: 1.6,
             }}
           >
             Estética · Beleza · Barbearia · Manicure · Sobrancelha · Depilação ·

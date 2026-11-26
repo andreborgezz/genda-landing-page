@@ -36,10 +36,7 @@ export function HowItWorks() {
   return (
     <section
       id="como-funciona"
-      style={{
-        background: `linear-gradient(180deg, ${theme.colors.pageBg} 0%, ${theme.colors.white} 30%)`,
-        padding: '88px 24px',
-      }}
+      className="genda-section-how"
     >
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <motion.div
@@ -79,14 +76,7 @@ export function HowItWorks() {
                 <motion.article
                   key={step.number}
                   variants={fadeIn}
-                  style={{
-                    background: theme.colors.pageBg,
-                    border: `1px solid ${theme.colors.bluePastel}`,
-                    borderRadius: theme.radii.xl,
-                    padding: '32px 28px',
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
+                  className="genda-step-card"
                 >
                   <div
                     style={{

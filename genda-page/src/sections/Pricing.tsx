@@ -51,12 +51,7 @@ export function Pricing() {
   return (
     <section
       id="precos"
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        background: theme.colors.pageBg,
-        padding: '96px 24px',
-      }}
+      className="genda-section-pricing"
     >
       <div
         className="genda-dot-grid"
@@ -94,7 +89,7 @@ export function Pricing() {
           </h2>
           <p
             style={{
-              fontSize: '18px',
+              fontSize: 'clamp(16px, 2.5vw, 18px)',
               color: theme.colors.textSecondary,
               maxWidth: '480px',
               margin: '16px auto 0',
@@ -109,16 +104,7 @@ export function Pricing() {
 
         <div className="genda-pricing-layout">
           <div className="genda-pricing-url-col">
-            <div
-              style={{
-                background: theme.colors.white,
-                border: `1px solid ${theme.colors.bluePastel}`,
-                borderRadius: theme.radii.xl,
-                padding: '28px 32px',
-                boxShadow: theme.shadows.card,
-                width: '100%',
-              }}
-            >
+            <div className="genda-pricing-url-card">
               <div
                 style={{
                   fontSize: '12px',

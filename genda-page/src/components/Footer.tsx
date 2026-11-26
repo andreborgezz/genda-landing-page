@@ -2,12 +2,7 @@ import { theme } from '../styles/theme'
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        background: theme.colors.blueDark,
-        padding: '64px 24px 40px',
-      }}
-    >
+    <footer className="genda-footer">
       <div
         style={{
           maxWidth: '1100px',
