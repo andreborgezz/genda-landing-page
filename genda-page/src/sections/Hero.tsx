@@ -1,22 +1,17 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { ArrowDown, ArrowRight, Check } from 'lucide-react'
 import { useWindowWidth } from '../hooks/useWindowWidth'
 import {
   DUR,
   EASE_OUT,
   fadeIn,
-  fadeInUp,
+  heroBlurInUp,
   pressable,
   scaleIn,
   staggerContainer,
 } from '../lib/motion'
 import { theme } from '../styles/theme'
-
-const AVATARS = [
-  { initials: 'MC', bg: theme.colors.bluePastel },
-  { initials: 'RS', bg: theme.colors.hoverSoft },
-  { initials: 'CF', bg: theme.colors.bluePastel },
-]
 
 const TIME_SLOTS = [
   { time: '09:00', status: 'available' },
@@ -41,6 +36,23 @@ export function Hero() {
 
   return (
     <section className="genda-hero-section">
+      <div
+        className="genda-dot-grid"
+        aria-hidden="true"
+        style={{ opacity: 0.6 }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'radial-gradient(ellipse 60% 50% at 50% 0%, transparent 60%, #F8F9FF 100%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+
       <div className="genda-hero-inner">
         <motion.div
           variants={staggerContainer(0.1, 0.2)}
@@ -67,7 +79,7 @@ export function Hero() {
           </motion.div>
 
           <motion.h1
-            variants={fadeInUp}
+            variants={heroBlurInUp}
             style={{
               marginTop: '20px',
               fontSize: 'clamp(40px, 5vw, 64px)',
@@ -81,12 +93,25 @@ export function Hero() {
             </span>
             <span
               style={{
+                display: 'inline-block',
+                position: 'relative',
+                fontStyle: 'italic',
+                color: theme.colors.blue,
+                marginTop: '4px',
+              }}
+            >
+              <span>Sem app.</span>
+              <span className="genda-hero-underline" aria-hidden="true" />
+            </span>
+            <span
+              style={{
                 display: 'block',
                 fontStyle: 'italic',
                 color: theme.colors.blue,
+                marginTop: '4px',
               }}
             >
-              Sem app. Sem senha.
+              Sem senha.
             </span>
           </motion.h1>
 
@@ -97,7 +122,7 @@ export function Hero() {
               color: theme.colors.textSecondary,
               lineHeight: 1.65,
               maxWidth: '440px',
-              marginTop: '20px',
+              marginTop: '22px',
             }}
           >
             Clientes agendam pelo seu link direto — só nome e WhatsApp. Você
@@ -116,62 +141,47 @@ export function Hero() {
             <motion.a
               href="#precos"
               className="genda-hero-primary"
-              whileHover={{ y: -1, transition: { duration: DUR.fast, ease: EASE_OUT } }}
+              whileHover={{
+                y: -1,
+                transition: { duration: DUR.fast, ease: EASE_OUT },
+              }}
               whileTap={pressable.whileTap}
             >
-              Entrar na lista de espera
+              <span>Entrar na lista de espera</span>
+              <span
+                aria-hidden="true"
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '50%',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  display: 'inline-grid',
+                  placeItems: 'center',
+                }}
+              >
+                <ArrowRight size={14} />
+              </span>
             </motion.a>
             <motion.a
               href="#como-funciona"
               className="genda-hero-secondary"
               whileTap={pressable.whileTap}
             >
-              Ver como funciona ↓
+              <span>Ver como funciona</span>
+              <ArrowDown size={16} aria-hidden="true" />
             </motion.a>
           </motion.div>
 
-          <motion.div
+          <motion.p
             variants={fadeIn}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              marginTop: '32px',
+              fontSize: '13px',
+              color: theme.colors.textSecondary,
+              marginTop: '24px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center' }} aria-hidden="true">
-              {AVATARS.map((avatar, index) => (
-                <span
-                  key={avatar.initials}
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    border: `2px solid ${theme.colors.pageBg}`,
-                    background: avatar.bg,
-                    color: theme.colors.blueTitle,
-                    fontSize: '11px',
-                    fontWeight: 700,
-                    display: 'grid',
-                    placeItems: 'center',
-                    marginLeft: index === 0 ? 0 : '-8px',
-                    flexShrink: 0,
-                  }}
-                >
-                  {avatar.initials}
-                </span>
-              ))}
-            </div>
-            <p
-              style={{
-                fontSize: '13px',
-                color: theme.colors.textSecondary,
-                lineHeight: 1.4,
-              }}
-            >
-              Profissionais de estética, beleza e barbearia testando agora.
-            </p>
-          </motion.div>
+            Acesso antecipado. Gratuito durante o beta.
+          </motion.p>
         </motion.div>
 
         <div
@@ -179,6 +189,7 @@ export function Hero() {
           style={{
             display: 'flex',
             justifyContent: 'center',
+            paddingTop: isSmallMobile ? '20px' : '16px',
           }}
         >
           <div
@@ -189,6 +200,26 @@ export function Hero() {
               margin: isSmallMobile ? '0 auto' : undefined,
             }}
           >
+            {!isSmallMobile && (
+              <span
+                style={{
+                  position: 'absolute',
+                  fontSize: '200px',
+                  fontWeight: 900,
+                  color: theme.colors.bluePastel,
+                  opacity: 0.4,
+                  right: '-20px',
+                  top: '-40px',
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                  zIndex: 0,
+                  lineHeight: 1,
+                }}
+              >
+                01
+              </span>
+            )}
+
             <div
               style={{
                 position: 'absolute',
@@ -201,6 +232,7 @@ export function Hero() {
                 transform: 'rotate(3deg)',
                 opacity: 0.5,
                 pointerEvents: 'none',
+                zIndex: 0,
               }}
             />
 
@@ -208,7 +240,7 @@ export function Hero() {
               initial={{ opacity: 0, scale: 0.92, y: 24 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: DUR.hero, delay: 0.4, ease: EASE_OUT }}
-              style={{ position: 'relative' }}
+              style={{ position: 'relative', zIndex: 1 }}
             >
               <motion.div
                 animate={allowFloat ? { y: [0, -8, 0] } : undefined}
@@ -412,7 +444,7 @@ export function Hero() {
                             background: theme.colors.blue,
                             color: theme.colors.white,
                             borderRadius: theme.radii.pill,
-                            padding: '6px 14px',
+                            padding: '6px 10px',
                             fontSize: '13px',
                             fontWeight: 600,
                             textAlign: 'center',
@@ -433,7 +465,7 @@ export function Hero() {
                             textDecoration: 'line-through',
                             border: `1px dashed ${theme.colors.bluePastel}`,
                             borderRadius: theme.radii.pill,
-                            padding: '6px 14px',
+                            padding: '6px 10px',
                             fontSize: '13px',
                             fontWeight: 500,
                             textAlign: 'center',
@@ -451,7 +483,7 @@ export function Hero() {
                         className="genda-slot-available"
                         style={{
                           borderRadius: theme.radii.pill,
-                          padding: '6px 14px',
+                          padding: '6px 10px',
                           fontSize: '13px',
                           fontWeight: 500,
                           textAlign: 'center',
@@ -481,6 +513,135 @@ export function Hero() {
                 </div>
               </motion.div>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 1.4, duration: 0.6, ease: EASE_OUT }}
+              style={{
+                position: 'absolute',
+                top: isSmallMobile ? '-18px' : '-20px',
+                right: isSmallMobile ? '0px' : '-20px',
+                zIndex: 3,
+                background: theme.colors.white,
+                border: `1px solid ${theme.colors.bluePastel}`,
+                borderRadius: theme.radii.md,
+                padding: '10px 14px',
+                boxShadow: theme.shadows.card,
+                fontSize: '13px',
+                maxWidth: isSmallMobile ? '250px' : '290px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontWeight: 700,
+                  color: theme.colors.blueDark,
+                }}
+              >
+                <span className="genda-pulse-dot" />
+                <span>Novo agendamento!</span>
+              </div>
+              <div
+                style={{
+                  color: theme.colors.textSecondary,
+                  fontSize: '12px',
+                  marginTop: '2px',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                Mariana C. · Design de Sobrancelhas · 10:00
+              </div>
+            </motion.div>
+
+            <div className="genda-hero-floating-badges">
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={
+                  allowFloat
+                    ? { opacity: 1, x: 0, y: [0, -5, 0] }
+                    : { opacity: 1, x: 0 }
+                }
+                transition={
+                  allowFloat
+                    ? {
+                        opacity: { duration: 0.6, delay: 1.1, ease: EASE_OUT },
+                        x: { duration: 0.6, delay: 1.1, ease: EASE_OUT },
+                        y: {
+                          duration: 3.6,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 1.7,
+                        },
+                      }
+                    : { duration: 0.6, delay: 1.1, ease: EASE_OUT }
+                }
+                style={{
+                  position: 'absolute',
+                  bottom: '30%',
+                  left: '-60px',
+                  zIndex: 3,
+                  background: theme.colors.green,
+                  color: theme.colors.white,
+                  borderRadius: theme.radii.pill,
+                  padding: '6px 14px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  boxShadow: theme.shadows.card,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Link copiado!
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                animate={
+                  allowFloat
+                    ? { opacity: 1, x: 0, y: [0, -4, 0] }
+                    : { opacity: 1, x: 0 }
+                }
+                transition={
+                  allowFloat
+                    ? {
+                        opacity: { duration: 0.6, delay: 1.3, ease: EASE_OUT },
+                        x: { duration: 0.6, delay: 1.3, ease: EASE_OUT },
+                        y: {
+                          duration: 4.2,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: 2.0,
+                        },
+                      }
+                    : { duration: 0.6, delay: 1.3, ease: EASE_OUT }
+                }
+                style={{
+                  position: 'absolute',
+                  bottom: '10%',
+                  left: '-40px',
+                  zIndex: 3,
+                  background: theme.colors.white,
+                  color: theme.colors.greenDark,
+                  border: `1px solid ${theme.colors.green}`,
+                  borderRadius: theme.radii.pill,
+                  padding: '6px 14px',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  boxShadow: theme.shadows.card,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span>WhatsApp enviado</span>
+                <Check size={13} color={theme.colors.green} />
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>

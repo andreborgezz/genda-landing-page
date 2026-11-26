@@ -12,13 +12,22 @@ export const DUR = {
   hero: 1.1,
 } as const
 
-export const fadeInUp = {
+export const heroBlurInUp = {
   hidden: { opacity: 0, y: 28, filter: 'blur(10px)' },
   show: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
     transition: { duration: DUR.hero, ease: EASE_OUT },
+  },
+}
+
+export const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: DUR.enter, ease: EASE_OUT },
   },
 }
 

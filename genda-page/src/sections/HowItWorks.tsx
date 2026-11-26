@@ -37,8 +37,8 @@ export function HowItWorks() {
     <section
       id="como-funciona"
       style={{
-        background: theme.colors.white,
-        padding: '96px 24px',
+        background: `linear-gradient(180deg, ${theme.colors.pageBg} 0%, ${theme.colors.white} 30%)`,
+        padding: '88px 24px',
       }}
     >
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
@@ -64,90 +64,108 @@ export function HowItWorks() {
           </h2>
         </motion.div>
 
-        <motion.div
-          ref={gridRef}
-          className="genda-steps-grid"
-          variants={staggerContainer(0.12, 0.1)}
-          initial="hidden"
-          animate={gridInView ? 'show' : 'hidden'}
+        <div className="genda-steps-wrap">
+          <div className="genda-steps-connector" aria-hidden="true" />
+          <motion.div
+            ref={gridRef}
+            className="genda-steps-grid"
+            variants={staggerContainer(0.12, 0.1)}
+            initial="hidden"
+            animate={gridInView ? 'show' : 'hidden'}
+          >
+            {STEPS.map((step) => {
+              const Icon = step.icon
+              return (
+                <motion.article
+                  key={step.number}
+                  variants={fadeIn}
+                  style={{
+                    background: theme.colors.pageBg,
+                    border: `1px solid ${theme.colors.bluePastel}`,
+                    borderRadius: theme.radii.xl,
+                    padding: '36px 32px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      position: 'absolute',
+                      bottom: '-16px',
+                      right: '16px',
+                      fontSize: '100px',
+                      fontWeight: 900,
+                      color: theme.colors.bluePastel,
+                      lineHeight: 1,
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                    }}
+                  >
+                    {step.number}
+                  </span>
+
+                  <div
+                    style={{
+                      width: '52px',
+                      height: '52px',
+                      background: theme.colors.bluePastel,
+                      borderRadius: '14px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: '20px',
+                      position: 'relative',
+                      zIndex: 1,
+                    }}
+                  >
+                    <Icon size={28} color={theme.colors.blue} aria-hidden="true" />
+                  </div>
+
+                  <h3
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: 700,
+                      color: theme.colors.blueDark,
+                      marginBottom: '10px',
+                      position: 'relative',
+                      zIndex: 1,
+                    }}
+                  >
+                    {step.title}
+                  </h3>
+
+                  <p
+                    style={{
+                      fontSize: '15px',
+                      color: theme.colors.textSecondary,
+                      lineHeight: 1.65,
+                      position: 'relative',
+                      zIndex: 1,
+                    }}
+                  >
+                    {step.description}
+                  </p>
+                </motion.article>
+              )
+            })}
+          </motion.div>
+        </div>
+
+        <p
+          style={{
+            margin: '56px auto 0',
+            textAlign: 'center',
+            fontSize: 'clamp(18px, 2.5vw, 24px)',
+            fontWeight: 700,
+            color: theme.colors.blueDark,
+            maxWidth: '500px',
+            lineHeight: 1.35,
+            letterSpacing: '-0.015em',
+          }}
         >
-          {STEPS.map((step) => {
-            const Icon = step.icon
-            return (
-              <motion.article
-                key={step.number}
-                variants={fadeIn}
-                style={{
-                  background: theme.colors.pageBg,
-                  border: `1px solid ${theme.colors.bluePastel}`,
-                  borderRadius: theme.radii.xl,
-                  padding: '36px 32px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-              >
-                <span
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    bottom: '-16px',
-                    right: '16px',
-                    fontSize: '100px',
-                    fontWeight: 900,
-                    color: theme.colors.bluePastel,
-                    lineHeight: 1,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                  }}
-                >
-                  {step.number}
-                </span>
-
-                <div
-                  style={{
-                    width: '52px',
-                    height: '52px',
-                    background: theme.colors.bluePastel,
-                    borderRadius: '14px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '20px',
-                    position: 'relative',
-                    zIndex: 1,
-                  }}
-                >
-                  <Icon size={28} color={theme.colors.blue} aria-hidden="true" />
-                </div>
-
-                <h3
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    color: theme.colors.blueDark,
-                    marginBottom: '10px',
-                    position: 'relative',
-                    zIndex: 1,
-                  }}
-                >
-                  {step.title}
-                </h3>
-
-                <p
-                  style={{
-                    fontSize: '15px',
-                    color: theme.colors.textSecondary,
-                    lineHeight: 1.65,
-                    position: 'relative',
-                    zIndex: 1,
-                  }}
-                >
-                  {step.description}
-                </p>
-              </motion.article>
-            )
-          })}
-        </motion.div>
+          Enquanto você atende, o Genda cuida dos agendamentos.
+        </p>
       </div>
     </section>
   )

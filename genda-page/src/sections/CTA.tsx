@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { ArrowRight, Compass, Globe, MessageCircle } from 'lucide-react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import {
   DUR,
@@ -48,6 +49,34 @@ export function CTA() {
           background: 'rgba(29,78,216,0.3)',
           top: '-100px',
           right: '-100px',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          width: '200px',
+          height: '200px',
+          borderRadius: '50%',
+          background: 'rgba(16,185,129,0.15)',
+          bottom: '-60px',
+          left: '-60px',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          width: '100px',
+          height: '100px',
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.05)',
+          bottom: '40px',
+          right: '10%',
           pointerEvents: 'none',
         }}
       />
@@ -115,8 +144,69 @@ export function CTA() {
             }}
             whileTap={pressable.whileTap}
           >
-            Quero entrar na lista
+            <span>Quero entrar na lista</span>
+            <span
+              aria-hidden="true"
+              style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                background: theme.colors.bluePastel,
+                color: theme.colors.blue,
+                display: 'inline-grid',
+                placeItems: 'center',
+              }}
+            >
+              <ArrowRight size={14} />
+            </span>
           </motion.a>
+        </motion.div>
+
+        <motion.div
+          variants={fadeIn}
+          style={{
+            marginTop: '32px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '10px',
+          }}
+        >
+          <div
+            aria-hidden="true"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '16px',
+              color: 'rgba(255,255,255,0.3)',
+            }}
+          >
+            <MessageCircle size={20} />
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+            </svg>
+            <Globe size={20} />
+            <Compass size={20} />
+          </div>
+          <span
+            style={{
+              fontSize: '12px',
+              color: 'rgba(255,255,255,0.3)',
+            }}
+          >
+            Funciona em qualquer navegador
+          </span>
         </motion.div>
 
         <motion.p

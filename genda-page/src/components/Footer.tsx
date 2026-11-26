@@ -21,40 +21,37 @@ export function Footer() {
               aria-label="Genda"
               style={{
                 display: 'inline-flex',
-                alignItems: 'baseline',
-                fontSize: '20px',
-                fontWeight: 800,
-                color: theme.colors.white,
-                letterSpacing: '-0.04em',
-                lineHeight: 1,
+                alignItems: 'center',
               }}
             >
-              <span>genda</span>
-              <span
-                aria-hidden="true"
+              <img
+                src="/genda-logo-horizontal-dots.svg"
+                alt="Genda"
+                height={28}
                 style={{
-                  color: theme.colors.green,
-                  fontSize: '22px',
-                  lineHeight: 1,
+                  display: 'block',
+                  width: 'auto',
+                  filter: 'brightness(0) invert(1)',
+                  opacity: 0.9,
                 }}
-              >
-                ·
-              </span>
+              />
             </a>
             <p
               style={{
                 color: theme.colors.textSecondary,
                 fontSize: '14px',
-                marginTop: '8px',
+                marginTop: '10px',
               }}
             >
-              Agendamento simples para quem trabalha com beleza.
+              Agendamento sem fricção para profissionais de beleza.
             </p>
           </div>
 
           <span
             style={{
-              display: 'inline-block',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
               background: 'rgba(29,78,216,0.2)',
               color: theme.colors.blueLight,
               border: '1px solid rgba(29,78,216,0.3)',
@@ -65,7 +62,8 @@ export function Footer() {
               whiteSpace: 'nowrap',
             }}
           >
-            Em beta · em breve para todos
+            <span className="genda-pulse-dot" aria-hidden="true" />
+            <span>Em beta · em breve para todos</span>
           </span>
         </div>
 

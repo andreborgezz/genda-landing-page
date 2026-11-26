@@ -1,8 +1,18 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { EASE_OUT } from '../lib/motion'
 import { theme } from '../styles/theme'
 
 export function Header() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <div
       style={{
@@ -19,7 +29,9 @@ export function Header() {
         style={{
           maxWidth: '1100px',
           margin: '0 auto',
-          background: theme.colors.white,
+          background: scrolled ? 'rgba(255, 255, 255, 0.85)' : theme.colors.white,
+          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
           border: `1px solid ${theme.colors.bluePastel}`,
           borderRadius: theme.radii.lg,
           boxShadow: '0 4px 24px rgba(30,58,138,0.08)',
@@ -29,6 +41,7 @@ export function Header() {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: '16px',
+          transition: 'background-color 200ms ease',
         }}
       >
         <a
@@ -36,25 +49,16 @@ export function Header() {
           aria-label="Genda"
           style={{
             display: 'inline-flex',
-            alignItems: 'baseline',
-            fontSize: '20px',
-            fontWeight: 800,
-            color: theme.colors.blue,
-            letterSpacing: '-0.04em',
-            lineHeight: 1,
+            alignItems: 'center',
+            flexShrink: 0,
           }}
         >
-          <span>genda</span>
-          <span
-            aria-hidden="true"
-            style={{
-              color: theme.colors.green,
-              fontSize: '22px',
-              lineHeight: 1,
-            }}
-          >
-            ·
-          </span>
+          <img
+            src="/genda-logo-horizontal-dots.svg"
+            alt="Genda"
+            height={32}
+            style={{ display: 'block', width: 'auto' }}
+          />
         </a>
 
         <nav className="genda-nav-links" aria-label="Navegação principal">
@@ -71,9 +75,6 @@ export function Header() {
 
         <a className="genda-header-cta" href="#precos">
           <span>Entrar na lista</span>
-          <span className="genda-arrow" aria-hidden="true">
-            →
-          </span>
         </a>
       </motion.header>
     </div>

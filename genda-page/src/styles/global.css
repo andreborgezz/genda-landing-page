@@ -64,6 +64,15 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+.genda-dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #DBEAFE 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .genda-nav-links {
   display: flex;
   align-items: center;
@@ -84,7 +93,7 @@ input:focus-visible {
 .genda-header-cta {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: #1D4ED8;
   color: #FFFFFF;
   border-radius: 999px;
@@ -97,15 +106,6 @@ input:focus-visible {
 
 .genda-header-cta:hover {
   background: #1E40AF;
-}
-
-.genda-header-cta .genda-arrow {
-  display: inline-block;
-  transition: transform 200ms ease;
-}
-
-.genda-header-cta:hover .genda-arrow {
-  transform: translateX(2px);
 }
 
 .genda-footer-top {
@@ -152,45 +152,6 @@ input:focus-visible {
   color: #FFFFFF;
 }
 
-@media (max-width: 767px) {
-  .genda-nav-links {
-    display: none;
-  }
-
-  .genda-header-cta {
-    padding: 8px 14px;
-    font-size: 13px;
-  }
-
-  .genda-footer-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .genda-footer-links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 24px;
-  }
-
-  .genda-footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
 @keyframes gendaPulse {
   0%, 100% {
     opacity: 1;
@@ -199,6 +160,36 @@ input:focus-visible {
   50% {
     opacity: 0.5;
     transform: scale(0.8);
+  }
+}
+
+@keyframes growWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes gendaRingPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(29, 78, 216, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0);
   }
 }
 
@@ -211,15 +202,40 @@ input:focus-visible {
   animation: gendaPulse 2s ease infinite;
 }
 
+.genda-hero-underline {
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #1D4ED8, #10B981);
+  border-radius: 999px;
+  animation: growWidth 1s ease forwards 0.8s;
+}
+
+.genda-cursor-blink {
+  display: inline-block;
+  margin-left: 2px;
+  color: #1D4ED8;
+  animation: blink 1s step-end infinite;
+}
+
+.genda-ring-pulse {
+  animation: gendaRingPulse 2s infinite;
+}
+
 .genda-hero-section {
+  position: relative;
+  overflow: hidden;
   background: #F8F9FF;
-  padding: 24px 24px 96px;
+  padding: 24px 24px 80px;
 }
 
 .genda-hero-inner {
+  position: relative;
+  z-index: 1;
   max-width: 1100px;
   margin: 0 auto;
-  min-height: calc(100vh - 92px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -230,10 +246,11 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   background: #1D4ED8;
   color: #FFFFFF;
   border-radius: 999px;
-  padding: 14px 28px;
+  padding: 14px 24px 14px 28px;
   font-size: 16px;
   font-weight: 700;
   transition: background-color 200ms ease;
@@ -247,6 +264,7 @@ input:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   background: transparent;
   color: #1D4ED8;
   border: 1.5px solid #DBEAFE;
@@ -274,118 +292,85 @@ input:focus-visible {
   border-color: #93C5FD;
 }
 
-@media (max-width: 899px) {
-  .genda-hero-section {
-    padding: 36px 24px 72px;
-  }
+.genda-hero-floating-badges {
+  display: block;
+}
 
-  .genda-hero-inner {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    gap: 48px;
-  }
+.genda-steps-wrap {
+  position: relative;
+  margin-top: 56px;
+}
+
+.genda-steps-connector {
+  position: absolute;
+  top: 52px;
+  left: 15%;
+  width: 70%;
+  border-top: 2px dashed #DBEAFE;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .genda-steps-grid {
-  margin-top: 56px;
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
-.genda-features-grid {
+.genda-features-bento {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.genda-bento-wide {
+  grid-column: span 4;
+}
+
+.genda-bento-narrow {
+  grid-column: span 2;
+}
+
+.genda-bento-half {
+  grid-column: span 3;
+}
+
+.genda-forwho-grid {
   margin-top: 56px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 4px;
 }
 
-@media (max-width: 899px) {
-  .genda-features-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.genda-forwho-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 28px;
+  transition: background-color 200ms ease, border-color 200ms ease;
 }
 
-@media (max-width: 767px) {
-  .genda-steps-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+.genda-forwho-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
-@media (max-width: 599px) {
-  .genda-features-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@keyframes gendaMarqueeLeft {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.genda-marquee-mask {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-}
-
-.genda-marquee-track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-  animation: gendaMarqueeLeft var(--marquee-dur, 30s) linear infinite;
-}
-
-.genda-marquee-track--reverse {
-  animation-direction: reverse;
-}
-
-.genda-marquee-mask:hover .genda-marquee-track {
-  animation-play-state: paused;
-}
-
-.genda-marquee-group {
-  display: flex;
-  align-items: stretch;
-  flex: none;
-  gap: 20px;
-  padding-right: 20px;
-}
-
-.genda-testimonials-static {
-  margin: 56px auto 0;
-  max-width: 1100px;
-  padding: 0 24px;
+.genda-pricing-layout {
+  margin-top: 56px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr 480px;
+  align-items: center;
+  gap: 48px;
 }
 
-@media (max-width: 999px) {
-  .genda-testimonials-static {
-    grid-template-columns: 1fr;
-  }
-}
-
-@keyframes gendaRingPulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.3);
-  }
-  70% {
-    box-shadow: 0 0 0 12px rgba(29, 78, 216, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(29, 78, 216, 0);
-  }
-}
-
-.genda-ring-pulse {
-  animation: gendaRingPulse 2s infinite;
+.genda-pricing-url-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .genda-pricing-card {
@@ -395,6 +380,9 @@ input:focus-visible {
   padding: 40px;
   box-shadow: 0px 10px 25px -5px rgba(30, 58, 138, 0.14), 0px 4px 10px -2px rgba(30, 58, 138, 0.05);
   text-align: center;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .genda-waitlist-form {
@@ -424,10 +412,14 @@ input:focus-visible {
 }
 
 .genda-waitlist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: #1D4ED8;
   color: #FFFFFF;
   border-radius: 999px;
-  padding: 12px 24px;
+  padding: 12px 22px;
   font-size: 15px;
   font-weight: 700;
   white-space: nowrap;
@@ -439,12 +431,12 @@ input:focus-visible {
   background: #1E40AF;
 }
 
-.genda-pricing-stats {
+.genda-pricing-promises {
   margin-top: 48px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 32px 48px;
+  gap: 16px 32px;
 }
 
 .genda-cta-final-btn {
@@ -455,7 +447,9 @@ input:focus-visible {
   font-size: 17px;
   font-weight: 700;
   margin-top: 36px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   transition: background-color 200ms ease, box-shadow 200ms ease;
 }
 
@@ -471,6 +465,95 @@ input:focus-visible {
 
 .genda-cta-support-link:hover {
   color: #FFFFFF;
+}
+
+@media (max-width: 899px) {
+  .genda-hero-section {
+    padding: 24px 24px 64px;
+  }
+
+  .genda-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .genda-features-bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .genda-bento-wide {
+    grid-column: span 2;
+  }
+
+  .genda-bento-narrow,
+  .genda-bento-half {
+    grid-column: span 1;
+  }
+
+  .genda-forwho-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .genda-pricing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .genda-pricing-url-col {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .genda-nav-links {
+    display: none;
+  }
+
+  .genda-header-cta {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .genda-hero-floating-badges {
+    display: none;
+  }
+
+  .genda-steps-connector {
+    display: none;
+  }
+
+  .genda-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .genda-footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .genda-footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+  }
+
+  .genda-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 599px) {
+  .genda-features-bento,
+  .genda-forwho-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .genda-bento-wide,
+  .genda-bento-narrow,
+  .genda-bento-half {
+    grid-column: span 1;
+  }
 }
 
 @media (max-width: 539px) {
@@ -493,5 +576,22 @@ input:focus-visible {
   .genda-waitlist-btn {
     width: 100%;
     border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .genda-hero-underline {
+    animation: none;
+    width: 100%;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
